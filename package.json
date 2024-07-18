@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "db-seed": "prisma db seed",
-    "postinstall": "prisma generate && prisma migrate deploy && prisma db seed"
+    "postinstall": "prisma generate && prisma migrate dev && prisma db seed"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeder.ts"
