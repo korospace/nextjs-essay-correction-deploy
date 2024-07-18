@@ -10,8 +10,8 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.userRole.deleteMany();
-  await prisma.synonym.deleteMany();
   await prisma.user.deleteMany();
+  // await prisma.synonym.deleteMany();
 
   // -- User Role --
   const arr_user_role = [
@@ -35,6 +35,17 @@ async function main() {
     });
   }
 
+  // -- Admin --
+  await prisma.user.create({
+    data: {
+      username: "admin1",
+      password: HashText.encrypt("admin1"),
+      full_name: "Admin 1",
+      id_user_role: 1,
+      created_by: 0,
+    },
+  });
+
   // -- Synonym --
   const filePathSynonym = join(__dirname, "/seeders/synonym.sql");
   const sqlsSynonym = fs
@@ -51,17 +62,6 @@ async function main() {
       await prisma.$executeRawUnsafe(sql);
     }
   }
-
-  // -- Admin --
-  await prisma.user.create({
-    data: {
-      username: "admin1",
-      password: HashText.encrypt("admin1"),
-      full_name: "Admin 1",
-      id_user_role: 1,
-      created_by: 0,
-    },
-  });
 }
 
 main()
